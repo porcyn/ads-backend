@@ -52,7 +52,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(cors({
-  origin: "http://localhost:3001",
+  origin: "https://ads-frontend-git-main-babypors-projects.vercel.app",
 }));
 // Route สำหรับหน้าแรก
 app.get("/", (req, res) => {
