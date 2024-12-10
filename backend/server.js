@@ -65,12 +65,11 @@ app.get("/", (req, res) => {
 
 // Route สำหรับ Google OAuth
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    res.redirect("http://localhost:3001/dashboard");
+    res.redirect("https://ads-frontend-git-main-babypors-projects.vercel.app/dashboard");
   }
 );
 
