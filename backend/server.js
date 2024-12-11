@@ -22,6 +22,11 @@ app.get("/", (req, res) => {
   res.send("Server is running!");
 });
 
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
 // ตั้งค่า Passport Google OAuth
 passport.use(
   new GoogleStrategy(
@@ -63,15 +68,18 @@ app.get("/", (req, res) => {
   }
 });
 
-// Route สำหรับ Google OAuth
-app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+// Route สำหรับเริ่มต้น Google OAuth
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+// Route สำหรับ Callback หลังจากเข้าสู่ระบบ Google สำเร็จ
 app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect("https://ads-frontend-git-main-babypors-projects.vercel.app/dashboard");
+    res.redirect('https://ads-frontend-git-main-babypors-projects.vercel.app/dashboard');
   }
 );
+
 
 // Route สำหรับ Dashboard
 app.get("/dashboard", (req, res) => {
