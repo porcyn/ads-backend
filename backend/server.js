@@ -75,11 +75,13 @@ app.get("/", (req, res) => {
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Route สำหรับ Callback หลังจากเข้าสู่ระบบ Google สำเร็จ
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  res.redirect('https://ads-frontend-git-main-babypors-projects.vercel.app/dashboard');
-});
-
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    res.redirect('https://ads-frontend-git-main-babypors-projects.vercel.app/dashboard');
+  }
+);
 
 
 // Route สำหรับ Dashboard
@@ -117,7 +119,7 @@ app.get("/check-auth", (req, res) => {
 });
 
 // เริ่มต้นเซิร์ฟเวอร์
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
