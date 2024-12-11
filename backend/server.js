@@ -56,9 +56,12 @@ passport.deserializeUser((user, done) => done(null, user));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors({
-  origin: "https://ads-frontend-git-main-babypors-projects.vercel.app",
-}));
+app.use(
+  cors({
+    origin: "https://ads-frontend-git-main-babypors-projects.vercel.app",
+  })
+);
+
 // Route สำหรับหน้าแรก
 app.get("/", (req, res) => {
   if (req.isAuthenticated()) {
@@ -72,13 +75,11 @@ app.get("/", (req, res) => {
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Route สำหรับ Callback หลังจากเข้าสู่ระบบ Google สำเร็จ
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    res.redirect('https://ads-frontend-git-main-babypors-projects.vercel.app/dashboard');
-  }
-);
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+  res.redirect('https://ads-frontend-git-main-babypors-projects.vercel.app/dashboard');
+});
+
 
 
 // Route สำหรับ Dashboard
@@ -116,7 +117,7 @@ app.get("/check-auth", (req, res) => {
 });
 
 // เริ่มต้นเซิร์ฟเวอร์
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
